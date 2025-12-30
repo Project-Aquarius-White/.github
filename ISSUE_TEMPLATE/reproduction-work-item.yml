@@ -1,0 +1,48 @@
+name: Reproduction Work Item
+description: Create a task for a specific stage of the reproduction protocol.
+title: "[Stage]: Task summary"
+labels: ["work-item"]
+body:
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Protocol Stage
+      description: Select the stage this work item belongs to.
+      options:
+        - 1-SPEC
+        - 2-PROTO
+        - 3-LIB
+        - 4-BENCH
+        - 5-MATCH
+        - 6-SHIP
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How critical is this task?
+      options:
+        - critical
+        - high
+        - medium
+        - low
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Detailed list of what must be completed for this task to be considered finished.
+      placeholder: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+    validations:
+      required: true
+  - type: textarea
+    id: technical-context
+    attributes:
+      label: Technical Context
+      description: Provide background information, relevant files, or implementation details.
+    validations:
+      required: false

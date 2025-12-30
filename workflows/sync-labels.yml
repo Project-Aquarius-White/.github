@@ -1,0 +1,45 @@
+name: Sync Labels Across Organization
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (no changes applied)'
+        required: false
+        default: false
+        type: boolean
+  push:
+    paths:
+      - '.github/labels.yml'
+    branches:
+      - main
+
+jobs:
+  sync-labels:
+    name: Sync Labels
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        repo:
+          - simple-lstm
+      fail-fast: false
+    
+    steps:
+      - name: Checkout org .github repository
+        uses: actions/checkout@v4
+      
+      - name: Sync labels to ${{ matrix.repo }}
+        uses: EndBug/label-sync@v2
+        with:
+          config-file: .github/labels.yml
+          repository: Project-Aquarius-White/${{ matrix.repo }}
+          token: ${{ secrets.ORG_LABEL_SYNC_PAT }}
+          delete-other-labels: false
+          dry-run: ${{ inputs.dry_run || false }}
+      
+      - name: Report sync status
+        if: always()
+        run: |
+          echo "Label sync completed for: ${{ matrix.repo }}"
+          echo "Dry run: ${{ inputs.dry_run || false }}"

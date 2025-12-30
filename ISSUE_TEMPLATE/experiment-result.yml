@@ -1,0 +1,38 @@
+name: Experiment Result
+description: Log the outcome of a reproduction experiment or benchmark.
+title: "Experiment: [Name]"
+labels: ["experiment"]
+body:
+  - type: input
+    id: experiment-name
+    attributes:
+      label: Experiment Name
+      placeholder: e.g., LSTM-reproduction-baseline
+    validations:
+      required: true
+  - type: dropdown
+    id: status
+    attributes:
+      label: Result Status
+      description: Did the experiment match the expected outcomes?
+      options:
+        - pass
+        - fail
+        - partial
+        - inconclusive
+    validations:
+      required: true
+  - type: textarea
+    id: metrics
+    attributes:
+      label: Metrics and Results
+      description: Provide the quantitative data and observed results.
+    validations:
+      required: true
+  - type: textarea
+    id: paper-comparison
+    attributes:
+      label: Comparison to Paper Claims
+      description: How do these results compare to the claims made in the original research paper?
+    validations:
+      required: true
